@@ -1,5 +1,5 @@
 const express = require("express");
-// const knex = require("knex").config;
+const knex = require("./knex");
 const env = require('dotenv').config();
 const app = express();
 
@@ -12,3 +12,8 @@ app.listen(port, () => {
 app.get("/", (req, res) => {
     res.send('hello, world!')
 });
+
+app.get("/category", async (req, res) => {
+    const result = await knex("category").select("*");
+    res.json({result: result});
+})
