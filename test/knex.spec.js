@@ -63,7 +63,7 @@ describe("myapp test", () => {
       const testItem = {
         progress:30
       };
-      const res = await request.post("/item/2").send(testItem);
+      const res = await request.patch("/item/2").send(testItem);
       expect(res.body[0].progress).to.equal(30);
     })
     it("should delete item", async () => {

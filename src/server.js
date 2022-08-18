@@ -33,7 +33,7 @@ const setupServer = () => {
       .returning(["id", "name"]);
     res.json(result);
   });
-  app.post("/item/:id", async (req, res) => {
+  app.patch("/item/:id", async (req, res) => {
     const result = await knex("item")
       .update(req.body)
       .where({ id: req.params.id })
