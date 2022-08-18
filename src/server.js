@@ -19,6 +19,11 @@ const setupServer = () => {
         const result = await knex("item").select("*");
         res.json(result);
     })
+
+    app.get("/item/:id", async (req, res) => {
+        const result = await knex("item").select("name").where({"id": req.params.id});
+        res.json(result);
+    })
     return app;
 };
 

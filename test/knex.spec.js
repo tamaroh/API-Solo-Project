@@ -47,5 +47,9 @@ describe("myapp test", () => {
       const res = await request.get("/item");
         expect(res.body.length).to.equal(3);
       })
+    it("should return an item if id is given", async () => {
+      const res = await request.get("/item/3");
+      expect(res.body[0].name).to.equal('stray');
+    })
   });
 });
