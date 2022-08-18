@@ -3,13 +3,18 @@ const knex = require("../src/knex");
 const chaiHttp = require("chai-http");
 require("chai").use(chaiHttp);
 const { setupServer } = require("../src/server");
+const  {seed} = require('../db/seeds/item')
 
 describe("myapp test", () => {
   let server, request;
   beforeEach(() => {
     server = setupServer();
     request = require("chai").request(server);
+    seed(knex)
   });
+  after(async () => {
+    await knex("item").del();
+  })
   describe("setup", () => {
     it("should connect to database", () => {
       // this test passes even if database is not exist
@@ -39,9 +44,10 @@ describe("myapp test", () => {
   });
 
   describe("item", () => {
-    it("should return result array", async () => {
-      const result = await knex("item").select("*");
-      expect(result).to.be.an.instanceOf(Array);
+    it("should return result array", () => {
+       request.get("/item").then((err,res) => {
+        chai.expect(res).to.be.a.instanceOf(Array);
+       })
     });
   });
 });
