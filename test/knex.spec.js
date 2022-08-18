@@ -12,9 +12,9 @@ describe("myapp test", () => {
     request = require("chai").request(server);
     seed(knex);
   });
-  after(async () => {
-    await knex("item").del();
-  });
+  // after(async () => {
+  //   await knex("item").del();
+  // });
 
   describe("setup", () => {
     it("should connect to database", () => {
@@ -49,7 +49,6 @@ describe("myapp test", () => {
       })
     it("should return an item if id is given", async () => {
       const res = await request.get("/item/3");
-      console.log(res.body)
       expect(res.body[0].name).to.equal('stray');
     })
     it("should add item", async () => {
@@ -58,18 +57,17 @@ describe("myapp test", () => {
         category_id: 2
       };
       const res = await request.post("/item").send(testItem);
-      expect(res.ok).to.be.true;
+      expect(res.body[0].name).to.equal("Final Fantasy 8");
     })
-    it("should update item info", () => {
+    it("should update item info", async () => {
       const testItem = {
-        id:2,
         progress:30
       };
-      const res = await request.patch("/item").send(testItem);
-      expect(res.ok).to.be.true;
+      const res = await request.post("/item/2").send(testItem);
+      expect(res.body[0].progress).to.equal(30);
     })
-    it("should delete item", () => {
-      const res = await request.delete("/item/:id");
+    it("should delete item", async () => {
+      const res = await request.delete("/item/3");
       expect(res.ok).to.be.true;
     })
   });
