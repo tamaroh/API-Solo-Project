@@ -45,19 +45,19 @@ describe("myapp test", () => {
     });
     it("should return items", async () => {
       const res = await request.get("/item");
-        expect(res.body.length).to.equal(3);
+        expect(res.body.length).to.equal(8);
       })
     it("should return an item if id is given", async () => {
-      const res = await request.get("/item/3");
+      const res = await request.get("/item/4");
       expect(res.body[0].name).to.equal('stray');
     })
     it("should add item", async () => {
       const testItem = {
-        name:"Final Fantasy 8",
+        name:"Final Fantasy 9",
         category_id: 2
       };
       const res = await request.post("/item").send(testItem);
-      expect(res.body[0].name).to.equal("Final Fantasy 8");
+      expect(res.body[0].name).to.equal("Final Fantasy 9");
     })
     it("should update item info", async () => {
       const testItem = {
