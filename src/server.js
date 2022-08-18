@@ -1,19 +1,21 @@
 const express = require("express");
 const knex = require("./knex");
 const env = require('dotenv').config();
-const app = express();
 
-const port = process.env.DB_PORT || 3000;
+const setupServer = () => {
 
-app.listen(port, () => {
-    console.log(`app listening at port ${port}`)
-})
+    const app = express();
+            
+    app.get("/", (req, res) => {
+        res.send('hello, world!')
+    });
+    
+    app.get("/category", async (req, res) => {
+        const result = await knex("category").select("*");
+        res.json({result: result});
+    })
 
-app.get("/", (req, res) => {
-    res.send('hello, world!')
-});
+    return app;
+};
 
-app.get("/category", async (req, res) => {
-    const result = await knex("category").select("*");
-    res.json({result: result});
-})
+module.exports = {setupServer};

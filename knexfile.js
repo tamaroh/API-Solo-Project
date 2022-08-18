@@ -8,7 +8,6 @@ module.exports = {
     connection: {
       database: process.env.DB_NAME || 'my_db',
       user:     process.env.DB_USER || 'username',
-      password: process.env.DB_PASS || 'password'
     },
     migrations: {
       tableName: 'knex_migrations',
