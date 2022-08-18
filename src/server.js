@@ -15,6 +15,10 @@ const setupServer = () => {
         res.json(result);
     })
 
+    app.get("/item", async (req, res) => {
+        const result = await knex("item").select("*");
+        res.json(result);
+    })
     return app;
 };
 

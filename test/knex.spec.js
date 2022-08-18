@@ -40,12 +40,12 @@ describe("myapp test", () => {
 
   describe("item", () => {
     it("should return item array", async () => {
-      const res = request.get("/item");
-        expect(res).to.be.a.instanceOf(Array);
+      const res = await request.get("/item");
+        expect(res.body).to.be.a.instanceOf(Array);
     });
     it("should return items", async () => {
-      const res = request.get("/item");
-        expect(res.length).to.equal(3);
+      const res = await request.get("/item");
+        expect(res.body.length).to.equal(3);
       })
   });
 });
