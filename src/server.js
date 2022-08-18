@@ -5,7 +5,8 @@ const env = require('dotenv').config();
 const setupServer = () => {
 
     const app = express();
-            
+    app.use(express.json());
+
     app.get("/", (req, res) => {
         res.send('hello, my app!')
     });
@@ -23,6 +24,11 @@ const setupServer = () => {
     app.get("/item/:id", async (req, res) => {
         const result = await knex("item").select("name").where({"id": req.params.id});
         res.json(result);
+    })
+
+    app.post("/item", async (req, res) => {
+        const result = await knex("item").insert(req.body);
+        res.json(req.body);
     })
     return app;
 };

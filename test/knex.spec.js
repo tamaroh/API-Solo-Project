@@ -49,7 +49,16 @@ describe("myapp test", () => {
       })
     it("should return an item if id is given", async () => {
       const res = await request.get("/item/3");
+      console.log(res.body)
       expect(res.body[0].name).to.equal('stray');
+    })
+    it("should add item", async () => {
+      const testItem = {
+        name:"Final Fantasy 8",
+        category_id: 2
+      };
+      const res = await request.post("/item").send(testItem);
+      expect(res.ok).to.be.true;
     })
   });
 });
