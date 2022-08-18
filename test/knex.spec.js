@@ -60,5 +60,17 @@ describe("myapp test", () => {
       const res = await request.post("/item").send(testItem);
       expect(res.ok).to.be.true;
     })
+    it("should update item info", () => {
+      const testItem = {
+        id:2,
+        progress:30
+      };
+      const res = await request.patch("/item").send(testItem);
+      expect(res.ok).to.be.true;
+    })
+    it("should delete item", () => {
+      const res = await request.delete("/item/:id");
+      expect(res.ok).to.be.true;
+    })
   });
 });
