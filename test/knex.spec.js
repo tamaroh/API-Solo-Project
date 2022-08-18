@@ -3,51 +3,49 @@ const knex = require("../src/knex");
 const chaiHttp = require("chai-http");
 require("chai").use(chaiHttp);
 const { setupServer } = require("../src/server");
-const  {seed} = require('../db/seeds/item')
+const { seed } = require("../db/seeds/item");
 
 describe("myapp test", () => {
   let server, request;
   beforeEach(() => {
     server = setupServer();
     request = require("chai").request(server);
-    seed(knex)
+    seed(knex);
   });
   after(async () => {
     await knex("item").del();
-  })
+  });
+
   describe("setup", () => {
     it("should connect to database", () => {
       // this test passes even if database is not exist
-      knex.raw("select 1 as result").catch(() => {
+       knex.raw("select 1 as result").catch(() => {
         assert.fail("failed test 1");
       });
     });
 
-    it("should return a string if accessed to top route", () => {
+    it("should return a string if accessed to top route",  async () => {
       // this test passes even if database is not exist
-      request
-        .get("/")
-        .then((err, res) => {
-          chai.expect(err).to.be.null;
-          chai.expect(res).to.equal("hello, my app!");
-        })
-        .catch(() => assert.fail("failed test 2"));
+      const res = await request.get("/");
+          expect(res.text).to.equal("hello, my app!");
     });
   });
 
   describe("category", () => {
-    it("should return result array", () => {
-      request.get("/category").then((err, res) => {
-        chai.expect(res).to.be.a.instanceOf(Array);
-      });
+    it("should return result array", async () => {
+      const res = await request.get("/category");
+        expect(res.body).to.be.a.instanceOf(Array);
     });
   });
 
   describe("item", () => {
-    it("should return result array", () => {
-       request.get("/item").then((err,res) => {
-        chai.expect(res).to.be.a.instanceOf(Array);
-       })
+    it("should return item array", async () => {
+      const res = request.get("/item");
+        expect(res).to.be.a.instanceOf(Array);
     });
+    it("should return items", async () => {
+      const res = request.get("/item");
+        expect(res.length).to.equal(3);
+      })
   });
 });

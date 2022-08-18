@@ -7,12 +7,12 @@ const setupServer = () => {
     const app = express();
             
     app.get("/", (req, res) => {
-        res.send('hello, world!')
+        res.send('hello, my app!')
     });
     
     app.get("/category", async (req, res) => {
         const result = await knex("category").select("*");
-        res.json({result: result});
+        res.json(result);
     })
 
     return app;
