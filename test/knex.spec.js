@@ -7,10 +7,10 @@ const { seed } = require("../db/seeds/item");
 
 describe("myapp test", () => {
   let server, request;
-  beforeEach(() => {
+  beforeEach(async() => {
     server = setupServer();
     request = require("chai").request(server);
-    seed(knex);
+    await seed(knex);
   });
   // after(async () => {
   //   await knex("item").del();

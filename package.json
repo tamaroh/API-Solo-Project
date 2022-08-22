@@ -33,5 +33,6 @@
     "chai-http": "^4.3.0",
     "mocha": "^10.0.0",
     "nodemon": "^2.0.19"
-  }
+  },
+  "proxy": "http://localhost:4000"
 }
